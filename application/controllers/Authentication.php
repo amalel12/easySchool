@@ -21,5 +21,4 @@ class Authentication extends CI_Controller {
 		$this->load->view('authentication/layout', $data);
 	}
 
-	
 }
