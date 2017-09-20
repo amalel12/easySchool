@@ -288,7 +288,7 @@
                       <a class="list-group-item" href="#">
                         <div class="notification">
                           <div class="notification-media">
-                            <img class="rounded" width="40" height="40" src="img/0872116906.jpg" alt="Emma Lewis">
+                            <img class="rounded" width="40" height="40" src="<?= base_url(); ?>assets/img/0872116906.jpg" alt="Emma Lewis">
                           </div>
                           <div class="notification-content">
                             <small class="notification-timestamp">8 hr</small>
@@ -302,7 +302,7 @@
                       <a class="list-group-item" href="#">
                         <div class="notification">
                           <div class="notification-media">
-                            <img class="rounded" width="40" height="40" src="img/0601274412.jpg" alt="Sophia Evans">
+                            <img class="rounded" width="40" height="40" src="<?= base_url(); ?>assets/img/0601274412.jpg" alt="Sophia Evans">
                           </div>
                           <div class="notification-content">
                             <small class="notification-timestamp">8 hr</small>
