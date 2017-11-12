@@ -336,24 +336,16 @@
               </li>
               <li class="dropdown hidden-xs">
                 <button class="navbar-account-btn" data-toggle="dropdown" aria-haspopup="true">
-                  <img class="rounded" width="36" height="36" src="img/0180441436.jpg" alt="Teddy Wilson"> Teddy Wilson
+                  <img class="rounded" width="36" height="36" src="<?= base_url(); ?>assets/img/0180441436.jpg" alt="Teddy Wilson"> Teddy Wilson
                   <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-right">
-                  <li>
-                    <a href="upgrade.html">
-                      <h5 class="navbar-upgrade-heading">
-                        Upgrade Now
-                        <small class="navbar-upgrade-notification">You have 15 days left in your trial.</small>
-                      </h5>
-                    </a>
-                  </li>
                   <li class="divider"></li>
                   <li class="navbar-upgrade-version">Version: 1.0.0</li>
                   <li class="divider"></li>
                   <li><a href="contacts.html">Contacts</a></li>
                   <li><a href="profile.html">Profile</a></li>
-                  <li><a href="login-1.html">Sign out</a></li>
+                  <li><a href="<?= base_url(); ?>authentication/logout/">Sign out</a></li>
                 </ul>
               </li>
               <li class="visible-xs-block">
@@ -369,7 +361,7 @@
                 </a>
               </li>
               <li class="visible-xs-block">
-                <a href="login-1.html">
+                <a href="<?= base_url(); ?>authentication/logout/">
                   <span class="icon icon-power-off icon-lg icon-fw"></span>
                   Sign out
                 </a>

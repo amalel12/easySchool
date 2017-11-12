@@ -1,10 +1,10 @@
     <div class="login">
       <div class="login-body">
-        <a class="login-brand" href="index-2.html">
+        <a class="login-brand" href="<?= base_url(); ?>">
           <img class="img-responsive" src="<?= base_url(); ?>assets/img/logo.svg" alt="Easy School">
         </a>
         <div class="login-form">
-          <form data-toggle="validator">
+          <form data-toggle="validator" method="post">
             <div class="form-group">
               <label for="email">Email</label>
               <input id="email" class="form-control" type="email" name="email" spellcheck="false" autocomplete="off" data-msg-required="Please enter your email address." required>
@@ -23,6 +23,8 @@
               <a href="<?= base_url()?>authentication/forget">Forgot password?</a>
             </div>
             <button class="btn btn-primary btn-block" type="submit">Sign in</button>
+            <br/>
+            <span class="text-danger"><?= $this->session->flashdata('msg'); ?></span>
           </form>
         </div>
       </div>
