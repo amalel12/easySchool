@@ -13,7 +13,7 @@ function loginCheck(){
 		return redirect(base_url());
 }
 
-function logout() {	
+function logoutAll() {	
 	unset_only();
 	redirect(base_url());
 }

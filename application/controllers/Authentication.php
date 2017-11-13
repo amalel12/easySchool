@@ -42,13 +42,17 @@ class Authentication extends CI_Controller {
 					"isAdmin" => $loginData->isAdmin,
 					"email" => $this->input->post('email')
 				);
-				$this->load->model('School_info');
-				
 				/**
-				*	setting the user information into session object.
+				*	get value from school table with schoolID.
+				*/
+				$this->load->model('School_info');
+				$schoolInfo = $this->School_info->getInfo($loginData->schoolID);
+				/**
+				*	setting the user information and school info into session object.
 				*/
 				$this->session->set_userdata('loginData',$lsessionData);
 				$this->session->set_userdata('isLogin', true);
+				$this->session->set_userdata('schoolInfo', $schoolInfo->row());
 				/**
 				*	redirecting the dashboard.
 				*/
@@ -71,10 +75,20 @@ class Authentication extends CI_Controller {
 		}
 	}
 
+	/**
+	*	$this method activate when user going to logout.
+	*/
 	public function logout() {
-		logout();
+		/**
+		*	this function discribes in login_helper.
+		*/
+		logoutAll();
 	}
 
+
+	/** 
+	*	url ->  base_url()/forget this is for forget page.
+	*/
 	public function forget() {
 		$data['title'] = 'EasySchool::Reset Password';
 		$data['body'] = 'authentication/forget';
@@ -82,20 +96,38 @@ class Authentication extends CI_Controller {
 	}
 
 	public function register() {
-
+		/**
+		 *  this is array variable witch is pass into view.
+		 */
 		$data['title'] = 'EasySchool::Register';
 		$data['body'] = 'authentication/register';
 
+		/**
+		 * This if block for check is methos is 'GET'.
+		 */
 		if($this->input->method() == 'get'){
 			$this->load->view('authentication/layout', $data);
 		}
+		/**
+		 * this block will execute if input method 'POST'
+		 */
 		else if($this->input->method() == 'post'){
 
+			/**
+			 * 	this function sets the error messange in error box and send to view. 
+			 */
 			$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
 
+			/**
+			 * 	Validation for input field and it will also checks unique usename in databse.
+			 */
 			$this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[loginTable.username]',
 			array('required' => 'You must provide a %s.')
 			);
+
+			/**
+			 * 
+			 */
 			$this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[6]',
 				array('required' => 'You must provide a %s.')
 			);
