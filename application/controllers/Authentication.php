@@ -19,7 +19,7 @@ class Authentication extends CI_Controller {
 			$this->load->view('authentication/layout', $data);
 		}
 		/**
-		*	This is post method for same. it will execute when user attampt for login.
+		*	This is post method for same. it will executes, when user attampt for login.
 		*/
 		else if($this->input->method() == 'post') {
 			/**
@@ -27,7 +27,7 @@ class Authentication extends CI_Controller {
 			*/
 			$this->load->model('Login_table');
 			/**
-			*	get the data form login table for that pirticular email
+			*	get the data from login table for that pirticular email
 			*/
 			$loginData = $this->Login_table->getLogin($this->input->post('email'));
 			$loginData = $loginData->row();
@@ -126,28 +126,60 @@ class Authentication extends CI_Controller {
 			);
 
 			/**
-			 * 
+			 * 	Validation for password field with minimum length 6.
 			 */
 			$this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[6]',
 				array('required' => 'You must provide a %s.')
 			);
+
+			/**
+			 * School_Name required field validation.
+			 */
 			$this->form_validation->set_rules('schoolName', 'School Name', 'required');
+
+			/**
+			 *  Contact number field validation with numeric requird field.
+			 */
 			$this->form_validation->set_rules('contactNumber', 'Contact Number', 'required|numeric');
 
 
+			/**
+			 * This if block will execute when form validation fails.
+			 */
 			if ($this->form_validation->run() == FALSE) {
 				$this->load->view('authentication/layout', $data);
 			}
+			/**
+			 * 	if form validation passes then this block will execute.
+			 */
 			else {
+
+				/**
+				 *	loading two models Login_Table & School info table.
+				 */
 				$this->load->model('Login_table');
 				$this->load->model('School_info');
 
+				/**
+				 * [$schoolInfoData contains the schoolName and contactNumber for saveing these data into login table.]
+				 * @var array
+				 */
 				$schoolInfoData = array(
 					"schoolName" => $this->input->post('schoolName'),
 					"contactOne" => $this->input->post('contactNumber')
 				);
+
+				/**
+				 * [$schoolInfoID contain true or false return value of setInfo method.]
+				 * @var [boolean]
+				 */
 				$schoolInfoID = $this->School_info->setInfo($schoolInfoData);
 				
+
+				/**
+				 * [$loginTableData contains the information which is save into loginTable.]
+				 * @var array
+				 */
 				$loginTableData = array(
 					"schoolID" => $schoolInfoID,
 					"isAdmin" => true,
@@ -156,15 +188,28 @@ class Authentication extends CI_Controller {
 				);
 				echo $this->Login_table->setLogin($loginTableData);
 
+				/**
+				 *  assign true in isLogin variable.
+				 */
 				$query['isLogin'] = true;
+				/**
+				 * 	set isLogin variable value into session object for identify session activate or not.
+				 */
 				$this->session->set_userdata($query);
+
+				/**
+				 * redirect onto dasboard page.
+				 */
 				redirect(base_url()."dashboard/");
 			}
 
 		}
+		/**
+		 * This block will execute when user trying to call page by another method (like put or delete.)
+		 */
 		else {
-			$data['error'] = 'Bad Request';
-			$this->load->view('authentication/layout', $data);
+			$this->session->set_flashdata('msg', 'Trying to call wrong method.');
+			redirect(base_url());
 		}
 	}
 
